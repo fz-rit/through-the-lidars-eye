@@ -1,3 +1,7 @@
+# General Steps
+I recommend creating a new branch for this repository and make your contributions to that branch ([Template-source-code](https://github.com/nerfies/nerfies.github.io)), then we can make a pull request to merge it to the main branch.
+
+
 # Structure
 Generally, our web page can multiple modules in the [reference web page: VGGT](https://vgg-t.github.io/), following the same order. 
 - Title; authors; An animation panel (detailed below); links to paper and code showing as buttons; Abstract - one paragraph; Method-the pipeline figure in the paper along with it's caption; Qualitative visualization (detailed below); BibTeX; one line notice "This webpage template is adapted from Nerfies, under a CC BY-SA 4.0 License."
