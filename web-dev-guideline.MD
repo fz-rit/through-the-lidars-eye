@@ -9,6 +9,7 @@ Generally, our web page can borrow multiple modules in the [reference web page: 
         - ![Animation Panel](figures/through-lidars-eye-animation-panel1.drawio.png)
     - For Quaitative Visualizations, use:
         - ![qualitative visuals](figures/through-lidars-eye-Qualitative%20Visualizations.drawio.png)
+    - All figures and videos you can directly get them through either [the manuscript project](https://www.overleaf.com/read/gqkdzrwpfprc#7c3121) or the links at the end of the appendix of the manuscript.
 
 - If you have any suggestions, feel free to add one more page in the [draw.io project](https://app.diagrams.net/#G1frAHk5ogYeRZbYux3RabhOyAAK4O4-zF#%7B%22pageId%22%3A%226aUZKJHKyU2D8GGN8WgK%22%7D) that I created and let me know.
 
