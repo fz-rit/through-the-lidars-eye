@@ -1,22 +1,481 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <title>Through the LiDAR’s Eye</title>
+  <meta name="keywords" content="lidar, Point cloud, feature, segmentation">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body{max-width:880px;margin:3rem auto;padding:0 1rem;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    .btn{display:inline-block;padding:.6rem 1rem;border-radius:.6rem;border:1px solid #ddd;text-decoration:none}
-  </style>
+  <title>Through the LiDAR's Eye: A Feature-Enriched and Uncertainty-Aware Annotation Pipeline for Terrestrial Point Cloud Semantic Segmentation</title>
+
+  <meta property="og:title" content="LiDAR's Eye" />
+  <meta property="og:description"
+    content="Through the LiDAR's Eye: A Feature-Enriched and Uncertainty-Aware Annotation Pipeline for Terrestrial Point Cloud Semantic Segmentation" />
+  <!-- Twitter automatically scrapes this. Go to https://cards-dev.twitter.com/validator?
+      if you update and want to force Twitter to re-scrape. -->
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:title" content="Through the LiDAR's Eye: A Feature-Enriched and Uncertainty-Aware Annotation Pipeline for Terrestrial Point Cloud Semantic Segmentation." />
+  <!-- <meta property="twitter:image"         content="https://3dmagicpony.github.io/resources/overview.jpg" /> -->
+
+  <!-- MathJax library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TSQGH8Q0WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-TSQGH8Q0WV');
+  </script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
 </head>
+
 <body>
-  <h1>Through the LiDAR’s Eye</h1>
-  <p>Project page for our manuscript. Code, figures, and docs will appear here.</p>
-  <p>
-    <a class="btn" href="https://github.com/fz-rit/through-the-lidars-eye">GitHub</a>
-    <!-- Add paper/demo links when ready -->
-  </p>
-  <img src="assets/figures/teaser.png" alt="Teaser" style="max-width:100%">
-  <p style="margin-top:2rem;font-size:.9rem;color:#555">This webpage template is adapted from Nerfies, under a CC BY-SA 4.0 License.</p>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-4 publication-title" style="font-size: 2rem;">Through the LiDAR's Eye: A Feature-Enriched and Uncertainty-Aware Annotation Pipeline for Terrestrial Point Cloud Semantic Segmentation</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="linkedin.com/in/fei-zh">Fei Zhang</a><sup>1, 2</sup>,
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://www.rit.edu/directory/roccis-rob-chancia">Rob Chancia</a><sup>1</sup>,
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://www.rit.edu/directory/axhcis-amirhossein-hassanzadeh">Amirhossein Hassanzadeh</a><sup>1</sup>
+              </span>
+              <br>
+              <span class="author-block">
+                <a href="https://www.rit.edu/directory/dxdcis-dimah-dera">Dimah Dera</a><sup>1</sup>,
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://www2.cifor.org/forestsasia/speaker/richard-mackenzie/index.html">Richard MacKenzie</a><sup>2</sup>,
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://www.rit.edu/directory/jvacis-jan-van-aardt">Jan van Aardt</a><sup>1</sup>
+              </span>
+            </div>
+
+
+
+            <div class="is-size-5 publication-authors" style="margin-bottom: 10px;">
+              <span class="author-block" style="margin-right: 10px;"><sup>1</sup>Center for Imaging Science, RIT</span>
+              <span class="author-block"><sup>2</sup>U.S. Forest Services</span>
+            </div>
+
+
+            <!-- <h1 style="font-size:24px;font-weight:bold">CVPR 2024 Best Paper Award</h1> -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="[PAPER LINK PLACEHOLDER]" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/fz-rit/through-the-lidars-eye"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <style>
+    .video-border {
+      display: inline-block;
+      padding: 2px; /* adjust thickness of your 'border' */
+      border-radius: 4px;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4); /* try different gradient colors */
+    }
+    .video-border video {
+      display: block;
+      border: none;
+      border-radius: 4px; /* match the wrapper for a consistent look /*
+    }
+  </style>
+
+
+
+  <!-- THE TEASER VIDEO ABOVE ABSTRACT -->
+  <style>
+    #teaser-video {
+      max-width: 85%;
+      margin: 0 auto;
+      display: block;
+      border: none; /* remove the solid border */
+      border-radius: 4px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    #architecture-img {
+      width: 90%;
+      margin: 0 auto;
+      display: block;
+      border: none;
+      border-radius: 0; /* removed border radius */
+      box-shadow: none; /* removed box shadow */
+    }
+
+    /* Enhanced style to further reduce space between buttons and teaser video */
+    .hero.teaser {
+      padding-top: 0;
+      margin-top: -3rem; /* Added negative margin to pull the teaser section up */
+    }
+    .hero.teaser .hero-body {
+      padding-top: 0; /* Reduced from 1rem to 0 */
+    }
+  </style>
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser-video" autoplay muted loop playsinline height="100%">
+          <source src="./assets/figures/demo.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle" style="text-align: center;"></h2>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+        <div class="column is-full-width has-text-centered">
+
+
+          <h2 class="title is-4" style="font-weight: 700;">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Accurate semantic segmentation of terrestrial laser scanning (TLS) point clouds is limited by costly manual annotation. We propose a semi-automated, uncertainty-aware pipeline that integrates spherical projection, feature enrichment, ensemble learning, and targeted annotation to reduce labeling effort while sustaining high accuracy. Our approach projects 3D points to a 2D spherical grid, enriches pixels with multi-source features, and trains an ensemble of segmentation networks to produce pseudo-labels and uncertainty maps, the latter guiding annotation of ambiguous regions. The 2D outputs are back-projected to 3D, yielding densely annotated point clouds supported by a three-tier visualization suite (2D feature maps, 3D colorized point clouds, and compact virtual spheres) for rapid triage and reviewer guidance. Using this pipeline, we built Mangrove3D, a semantic segmentation TLS dataset for mangrove forests. We further evaluated data efficiency and feature importance to address two key questions: (1) how much annotated data is needed, and (2) which features matter most. Results show that performance saturates after $\sim$12 annotated scans, geometric features contribute the most, and compact nine-channel stacks capture nearly all discriminative power (mean Intersection over Union, mIoU plateau around 0.76). Finally, we confirm generalization of our feature-enrichment strategy through cross-dataset tests on ForestSemantic and Semantic3D. Our contributions include: (i) a robust, uncertainty-aware TLS annotation pipeline with visualization tools; (ii) the Mangrove3D dataset; and (iii) empirical guidance on data efficiency and feature importance, enabling scalable, high-quality segmentation of TLS point clouds for ecological monitoring and beyond.
+            </p>
+          </div>
+          <br>
+
+
+          <h2 class="title is-4" style="font-weight: 700;">Method</h2>
+          <div class="content has-text-justified">
+            <p>
+              Three-stage workflow for annotating terrestrial-LiDAR scans. Stage 1: Spherical projection converts raw TLS points into two-dimensional feature maps and pseudo-RGB images. Stage 2: An iterative loop combines active learning and  self-training: an emsemble DNN model is repeatedly refined using  uncertainty-guided queries and high-confidence pseudo-labels. Stage 3: The resulting 2-D segmentation masks are  back-projected, followed by label refinement in 3D space and then reproject back to 2D, to yield a fully  annotated point cloud and refined 2D segmentation mask.
+            </p>
+          </div>
+          <div class="content has-text-centered">
+            <!-- <img id="teaser" src="https://placehold.co/600x400" alt="Teaser image" style="width: 100%;"> -->
+            <img id="architecture-img" src="./assets/figures/annotation_pipeline.png" alt="Architecture">
+          </div>
+          <br>
+
+
+          <h2 class="title is-4" style="font-weight: 700;">Qualitative Visualization</h2>
+          <div class="content has-text-centered">
+            <p>
+              Mangrove3D Segmentation Results
+            </p>
+          </div>
+          <div class="model-viewer-container">
+            <model-viewer id="QualitativeResult"
+                          src="assets/figures/mangrove.glb"
+                          alt="3D Model"
+                          loading="eager"
+                          touch-action="pan-y" environment-image="legacy"
+                          camera-orbit="0deg 0deg auto"
+                          zoom-sensitivity="0.2" camera-controls disable-tap min-camera-orbit="auto auto 20m"
+                          max-camera-orbit="auto auto 200m" interaction-prompt="none" shadow-intensity="0" ar
+                          disable-shadow ar-modes="webxr scene-viewer quick-look"
+                          style="width: 90%; height: 90%; background: #ffffff; margin: 0 auto;">
+            </model-viewer>
+          </div>
+          <br>
+          <div class="content has-text-centered">
+            <div class="thumbnail-container" id="thumbnail-qualitative">
+              <img src="assets/figures/mangrove.png" data-glb="assets/figures/mangrove.glb" loop playsinline muted></img>
+            </div>
+          </div>
+          <style>
+            .thumbnail-container img, .thumbnail-container video {
+              transition: all 0.3s ease;
+              border: 3px solid transparent;
+              cursor: pointer;
+            }
+            .thumbnail-selected {
+              transform: scale(1.2);
+              border: 6px solid #79b4f2 !important;
+              box-shadow: 0 0 10px rgba(121, 180, 242, 0.5);
+              z-index: 10;
+              position: relative;
+            }
+
+            /* New styles for responsive horizontal gallery */
+            .thumbnail-container {
+              display: flex;
+              flex-wrap: nowrap;
+              overflow-x: auto;
+              gap: 10px;
+              padding: 10px 0;
+              -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+              scrollbar-width: thin;
+              align-items: center;
+            }
+
+            .thumbnail-container img,
+            .thumbnail-container video {
+              flex: 0 0 auto;
+              width: auto;
+              height: 120px; /* Consistent height */
+              object-fit: cover;
+              max-width: none;
+            }
+
+            /* Custom scrollbar styling */
+            .thumbnail-container::-webkit-scrollbar {
+              height: 6px;
+            }
+
+            .thumbnail-container::-webkit-scrollbar-track {
+              background: #f1f1f1;
+              border-radius: 10px;
+            }
+
+            .thumbnail-container::-webkit-scrollbar-thumb {
+              background: #888;
+              border-radius: 10px;
+            }
+
+            .thumbnail-container::-webkit-scrollbar-thumb:hover {
+              background: #555;
+            }
+
+            /* Adjust for smaller screens */
+            @media (max-width: 768px) {
+              .thumbnail-container img,
+              .thumbnail-container video {
+                height: 100px;
+              }
+            }
+          </style>
+          <script>
+            // The problem is here - you're trying to select an element that doesn't exist
+            // document.querySelector('#thumbnail-qualitative img[src="resources/qualitative/college.png"]').classList.add('thumbnail-selected');
+
+            // Instead, select the first element that actually exists in your thumbnail container
+            document.addEventListener('DOMContentLoaded', function() {
+              // Select the first element in the thumbnail container (video or image)
+              const firstThumbnail = document.querySelector('#thumbnail-qualitative video, #thumbnail-qualitative img');
+              if (firstThumbnail) {
+                firstThumbnail.classList.add('thumbnail-selected');
+                // If it's a video, play it
+                if (firstThumbnail.tagName.toLowerCase() === 'video') {
+                  firstThumbnail.play();
+                }
+              }
+
+              document.querySelectorAll('#thumbnail-qualitative img, #thumbnail-qualitative video').forEach(el => {
+                // Rest of your click handler code remains the same
+                el.addEventListener('click', () => {
+                  const glbSrc = el.getAttribute('data-glb');
+                  const modelViewer = document.getElementById('QualitativeResult');
+                  modelViewer.setAttribute('src', glbSrc);
+                  modelViewer.cameraOrbit = "180deg 70deg auto";
+                  modelViewer.resetTurntableRotation(0);
+                  modelViewer.jumpCameraToGoal();
+
+                  // Remove selection class from all elements
+                  document.querySelectorAll('#thumbnail-qualitative img, #thumbnail-qualitative video').forEach(element => {
+                      element.classList.remove('thumbnail-selected');
+                  });
+
+                  // Add selection class to clicked element
+                  el.classList.add('thumbnail-selected');
+
+                  // Play video if it's a video element
+                  if (el.tagName.toLowerCase() === 'video') {
+                      el.play();
+                  }
+
+                  // Pause all other videos
+                  document.querySelectorAll('#thumbnail-qualitative video').forEach(video => {
+                      if (video !== el) {
+                          video.pause();
+                          video.currentTime = 0;
+                      }
+                  });
+                });
+              });
+            });
+          </script>
+
+          <br>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-4" style="font-weight: 700;">BibTeX</h2>
+      <pre><code> [YOUR BIBTEX GOES HERE] </code></pre>
+    </div>
+  </section>
+
+
+<section class="section" id="Acknowledgements" style="padding-top: 0rem;">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-4" style="font-weight: 700;">Acknowledgements</h2>
+      <p>
+        The authors are grateful to Dr. Nidhal Carla Bouaynaya and Dr. Bartosz Krawczyk for their valuable insights on uncertainty evaluation and semantic segmentation methods. We thank Mr. Brett Matzke for his assistance in setting up the computing resources. We also acknowledge RIT Research Computing for providing access to NVIDIA A100 computing resources.
+      </p>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This webpage template is adapted from <a href="https://vgg-t.github.io">VGG-T</a>,
+              under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="static/js/comparison.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial camera positions for all model viewers
+      const initialModelViewers = [
+        document.getElementById('QualitativeResult'),
+        document.getElementById('modelViewerComparison1'),
+        document.getElementById('modelViewerComparison2'),
+        document.getElementById('modelViewerComparison3')
+      ];
+
+      // Apply consistent initial camera settings to all model viewers
+      initialModelViewers.forEach(viewer => {
+        if (viewer) {
+          viewer.addEventListener('load', () => {
+            viewer.cameraOrbit = "180deg 70deg auto";
+            if (viewer.resetTurntableRotation) {
+              viewer.resetTurntableRotation(0);
+            }
+            viewer.jumpCameraToGoal();
+          });
+        }
+      });
+
+      // Handle comparison thumbnails
+      const firstComparisonThumbnail = document.querySelector('#thumbnail-comparison video, #thumbnail-comparison img');
+      if (firstComparisonThumbnail) {
+        firstComparisonThumbnail.classList.add('thumbnail-selected');
+        // If it's a video, play it
+        if (firstComparisonThumbnail.tagName.toLowerCase() === 'video') {
+          firstComparisonThumbnail.play();
+        }
+      }
+
+      document.querySelectorAll('#thumbnail-comparison img, #thumbnail-comparison video').forEach(el => {
+        el.addEventListener('click', () => {
+          const name = el.getAttribute('name');
+
+          // Update model viewers with the corresponding GLB files
+          const modelViewer1 = document.getElementById('modelViewerComparison1');
+          const modelViewer2 = document.getElementById('modelViewerComparison2');
+          const modelViewer3 = document.getElementById('modelViewerComparison3');
+
+          modelViewer1.setAttribute('src', `resources/comparison/ours/${name}.glb`);
+          modelViewer2.setAttribute('src', `resources/comparison/dust3r/${name}.glb`);
+
+          // For the third viewer, check the dropdown selection
+          const baseline = document.getElementById('comparisonBaselineSelection').value;
+          modelViewer3.setAttribute('src', `resources/comparison/${baseline}/${name}.glb`);
+
+          // Reset camera positions
+          [modelViewer1, modelViewer2, modelViewer3].forEach(viewer => {
+            viewer.cameraOrbit = "180deg 70deg auto";
+            if (viewer.resetTurntableRotation) {
+              viewer.resetTurntableRotation(0);
+            }
+            viewer.jumpCameraToGoal();
+          });
+
+          // Remove selection class from all elements
+          document.querySelectorAll('#thumbnail-comparison img, #thumbnail-comparison video').forEach(element => {
+            element.classList.remove('thumbnail-selected');
+          });
+
+          // Add selection class to clicked element
+          el.classList.add('thumbnail-selected');
+
+          // Play video if it's a video element
+          if (el.tagName.toLowerCase() === 'video') {
+            el.play();
+          }
+
+          // Pause all other videos
+          document.querySelectorAll('#thumbnail-comparison video').forEach(video => {
+            if (video !== el) {
+              video.pause();
+              video.currentTime = 0;
+            }
+          });
+        });
+      });
+
+      // Handle dropdown change for the third comparison model
+      document.getElementById('comparisonBaselineSelection').addEventListener('change', function() {
+        const selectedName = document.querySelector('#thumbnail-comparison .thumbnail-selected').getAttribute('name');
+        const baseline = this.value;
+        document.getElementById('modelViewerComparison3').setAttribute('src', `resources/comparison/${baseline}/${selectedName}.glb`);
+      });
+    });
+  </script>
+
 </body>
+
 </html>
