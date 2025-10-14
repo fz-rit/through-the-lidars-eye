@@ -317,10 +317,6 @@
             }
           </style>
           <script>
-            // The problem is here - you're trying to select an element that doesn't exist
-            // document.querySelector('#thumbnail-qualitative img[src="resources/qualitative/college.png"]').classList.add('thumbnail-selected');
-
-            // Instead, select the first element that actually exists in your thumbnail container
             document.addEventListener('DOMContentLoaded', function() {
               // Select the first element in the thumbnail container (video or image)
               const firstThumbnail = document.querySelector('#thumbnail-qualitative video, #thumbnail-qualitative img');
